@@ -1,16 +1,18 @@
 #Author: Caroline Ekchian, cekchian@bu.edu
 #import twitter API library: going to be using tweepy
+import tweepy
 
 def authorize_twitter():
     consumer_token="Put consumer API key here"
     consumer_secret="Put secret consumer API key here"
     access_key="Put access key here"
     access_secret="Put secret access key here"
-	authorization_handler.set_access_token(access_key, access_secret)
+    authorization_handler = tweepy.OAuthHandler(consumer_token, consumer_secret)
+    authorization_handler.set_access_token(access_key, access_secret)
     api= tweepy.API(authorization_handler)
     return api
 
-def download_twitter_images():
+def download_twitter_images(api):
     print('In function: download_twitter_images')
     print('Second function called.')
     print('This function is not yet implemented.')
@@ -31,7 +33,7 @@ def analyze_video():
 	
 def main():
     api=authorize_twitter()
-    #download_twitter_images()
+    #download_twitter_images(api)
     #convert_images_to_video()
     #analyze_video()
 	
