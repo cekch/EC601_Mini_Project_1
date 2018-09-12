@@ -4,10 +4,17 @@
 def authorize_twitter():
     print('In function: authorize_twitter')
     print('First function called.')
-    print('This function will authorize the usage of the tweepy.')
+    print('This function will authorize the usage of the tweepy. \n')
+
+def download_twitter_images():
+    print('In function: download_twitter_images')
+    print('Second function called.')
+    print('This function is not yet implemented.')
+    print('It will download the images from a twitter feed.')
 	
 def main():
     authorize_twitter()
+    download_twitter_images()
 	
 if __name__ == '__main__':
     main()
