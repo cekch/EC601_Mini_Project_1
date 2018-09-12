@@ -2,9 +2,13 @@
 #import twitter API library: going to be using tweepy
 
 def authorize_twitter():
-    print('In function: authorize_twitter')
-    print('First function called.')
-    print('This function will authorize the usage of the tweepy. \n')
+    consumer_token="Put consumer API key here"
+    consumer_secret="Put secret consumer API key here"
+    access_key="Put access key here"
+    access_secret="Put secret access key here"
+	authorization_handler.set_access_token(access_key, access_secret)
+    api= tweepy.API(authorization_handler)
+    return api
 
 def download_twitter_images():
     print('In function: download_twitter_images')
@@ -26,10 +30,10 @@ def analyze_video():
 	
 	
 def main():
-    authorize_twitter()
-    download_twitter_images()
-    convert_images_to_video()
-    analyze_video()
+    api=authorize_twitter()
+    #download_twitter_images()
+    #convert_images_to_video()
+    #analyze_video()
 	
 if __name__ == '__main__':
     main()
