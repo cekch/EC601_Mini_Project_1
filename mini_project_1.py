@@ -1,17 +1,12 @@
 #Author: Caroline Ekchian, cekchian@bu.edu
-#import twitter API library: going to be using tweepy
 import tweepy
 import urllib
 
 def authorize_twitter():
-    consumer_token='ckvs5fS5TUFSuZPzYYvFuqUrH'
-    consumer_secret='9csfakIHTpO0BSSJAnQICu5SB8nDqhC73JQXe39NXhpOLcZPgN'
-    access_key='355214663-PY1omoDd9MhhuM41GUpaJ2FOJNK2G5UVLtwauDdY'
-    access_secret='37oD1C45NSDXBYad3qOMtxU76Ynn2VkI4B0KLb6VYYKJt'
-    '''consumer_token="Put consumer API key here"
+    consumer_token="Put consumer API key here"
     consumer_secret="Put secret consumer API key here"
     access_key="Put access key here"
-    access_secret="Put secret access key here"'''
+    access_secret="Put secret access key here"
     authorization_handler=tweepy.OAuthHandler(consumer_token, consumer_secret)
     authorization_handler.set_access_token(access_key, access_secret)
     api=tweepy.API(authorization_handler)
