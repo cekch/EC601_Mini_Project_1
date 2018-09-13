@@ -1,6 +1,7 @@
 #Author: Caroline Ekchian, cekchian@bu.edu
 import tweepy
 import urllib
+import subprocess
 
 def authorize_twitter():
     consumer_token="Put consumer API key here"
@@ -27,17 +28,17 @@ def download_twitter_images(tweepy_api):
         if (media_tweet is not None):
             media_urls.add(media_tweet[0]['media_url'])
 
-    #download all of the images 				
+    #download all of the images
+    image_number=0	
     for url in media_urls:
         filename_index=url.rfind('/')
         filename=url[filename_index+1:]
-        urllib.urlretrieve(url,'./'+filename)
+		#change filenames to a format that can be used as an input into ffmpeg
+        urllib.urlretrieve(url,'./image_'+str(image_number)+'.jpg')
+        image_number=image_number+1
 	
 def convert_images_to_video():
-    print('In function: convert_images_to_video')
-    print('Third function called.')
-    print('This function is not yet implemented.')
-    print('It will use ffmpeg to convert the images that were downloaded to a video. \n')
+    subprocess.call('ffmpeg -framerate 1/5 -i image_%1d.jpg twitter_image_video.wmv')
 	
 def analyze_video():
     print('In function: analyze_video')
@@ -49,7 +50,7 @@ def analyze_video():
 def main():
     api=authorize_twitter()
     download_twitter_images(api)
-    #convert_images_to_video()
+    convert_images_to_video()
     #analyze_video()
 	
 if __name__ == '__main__':
