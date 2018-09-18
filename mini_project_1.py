@@ -2,12 +2,23 @@
 import tweepy
 import urllib
 import subprocess
+from google.cloud import vision
+import base64
+import io
+import os
 
+#google API key
 def authorize_twitter():
+    consumer_token='ckvs5fS5TUFSuZPzYYvFuqUrH'
+    consumer_secret='9csfakIHTpO0BSSJAnQICu5SB8nDqhC73JQXe39NXhpOLcZPgN'
+    access_key='355214663-PY1omoDd9MhhuM41GUpaJ2FOJNK2G5UVLtwauDdY'
+    access_secret='37oD1C45NSDXBYad3qOMtxU76Ynn2VkI4B0KLb6VYYKJt'
+    '''
     consumer_token="Put consumer API key here"
     consumer_secret="Put secret consumer API key here"
     access_key="Put access key here"
     access_secret="Put secret access key here"
+    '''
     authorization_handler=tweepy.OAuthHandler(consumer_token, consumer_secret)
     authorization_handler.set_access_token(access_key, access_secret)
     api=tweepy.API(authorization_handler)
@@ -29,29 +40,44 @@ def download_twitter_images(tweepy_api):
             media_urls.add(media_tweet[0]['media_url'])
 
     #download all of the images
-    image_number=0	
+    image_number=0
+    image_filenames=[]	
     for url in media_urls:
         filename_index=url.rfind('/')
         filename=url[filename_index+1:]
 		#change filenames to a format that can be used as an input into ffmpeg
         urllib.urlretrieve(url,'./image_'+str(image_number)+'.jpg')
+        image_filenames.append('image_'+str(image_number)+'.jpg')
         image_number=image_number+1
+
+    return image_filenames
 	
 def convert_images_to_video():
-    subprocess.call('ffmpeg -framerate 1/5 -i image_%1d.jpg twitter_image_video.wmv')
+    subprocess.call("ffmpeg -framerate 1/5 -f image2 -i image_%1d.jpg -vf scale=640:-1 -vcodec libx264 -r 30 twitter_image_video.mp4")
 	
-def analyze_video():
-    print('In function: analyze_video')
-    print('Fourth function called.')
-    print('This function is not yet implemeted')
-    print('It will use the google vision api to describe the video of the images using text.')
-	
-	
+def analyze_video(filenames):
+    client = vision.ImageAnnotatorClient()
+    #loop through all images
+    for file in filenames:
+        #load each image
+        with io.open('./'+file, 'rb') as twitter_image_file:
+            image_content = twitter_image_file.read()
+
+        twitter_image = vision.types.Image(content=image_content)
+
+        #extract labels from twitter images
+        response = client.label_detection(image=twitter_image)
+        image_labels = response.label_annotations
+		
+		#print the labels detected in each image
+        print('Labels in ' + file+ ':')
+        for label in image_labels:
+            print('\t'+label.description)
 def main():
     api=authorize_twitter()
-    download_twitter_images(api)
+    image_filenames=download_twitter_images(api)
     convert_images_to_video()
-    #analyze_video()
+    analyze_video(image_filenames)
 	
 if __name__ == '__main__':
     main()
