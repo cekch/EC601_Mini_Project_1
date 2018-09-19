@@ -3,28 +3,34 @@ import tweepy
 import urllib
 import subprocess
 from google.cloud import vision
-import base64
 import io
 import os
 
-#google API key
 def authorize_twitter():
+    '''Authorize use of the twitter API'''
+    consumer_token='ckvs5fS5TUFSuZPzYYvFuqUrH'
+    consumer_secret='9csfakIHTpO0BSSJAnQICu5SB8nDqhC73JQXe39NXhpOLcZPgN'
+    access_key='355214663-PY1omoDd9MhhuM41GUpaJ2FOJNK2G5UVLtwauDdY'
+    access_secret='37oD1C45NSDXBYad3qOMtxU76Ynn2VkI4B0KLb6VYYKJt'
+    '''
     consumer_token="Put consumer API key here"
     consumer_secret="Put secret consumer API key here"
     access_key="Put access key here"
     access_secret="Put secret access key here"
+    '''
     authorization_handler=tweepy.OAuthHandler(consumer_token, consumer_secret)
     authorization_handler.set_access_token(access_key, access_secret)
     api=tweepy.API(authorization_handler)
     return api
 
 def download_twitter_images(tweepy_api):
+    '''Download the images from the twitter feed'''
     tweets=[]
     media_urls=set()
 	
     '''Need to add tweet_mode=extended in order to get the full text of the tweet,
 	otherwise, it will not always find the image.'''
-    tweets=tweepy_api.user_timeline(screen_name='BostonTweet', count=10, tweet_mode='extended')
+    tweets=tweepy_api.user_timeline(screen_name='BostonTweet', count=15, tweet_mode='extended')
 	
     #Determine if there are any tweets with media
     for tweet in tweets:
@@ -47,9 +53,12 @@ def download_twitter_images(tweepy_api):
     return image_filenames
 	
 def convert_images_to_video():
+    '''convert the sequence of images to video using ffmpeg'''
     subprocess.call("ffmpeg -framerate 1/5 -f image2 -i image_%1d.jpg -vf scale=640:-1 -vcodec libx264 -r 30 twitter_image_video.mp4")
 	
 def analyze_video(filenames):
+    '''analyze the images that are in the video using the google vision API to detect
+    the different labels in the images'''
     client = vision.ImageAnnotatorClient()
     #loop through all images
     for file in filenames:
@@ -67,6 +76,7 @@ def analyze_video(filenames):
         print('Labels in ' + file+ ':')
         for label in image_labels:
             print('\t'+label.description)
+
 def main():
     api=authorize_twitter()
     image_filenames=download_twitter_images(api)
