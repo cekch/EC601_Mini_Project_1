@@ -8,12 +8,14 @@ import os
 
 def authorize_twitter(consumer_token, consumer_secret, access_key, access_secret):
     '''Authorize use of the twitter API'''
+    print("Authorizing use of Twitter API.")
     authorization_handler=tweepy.OAuthHandler(consumer_token, consumer_secret)
     authorization_handler.set_access_token(access_key, access_secret)
     api=tweepy.API(authorization_handler)
     return api
 
 def download_twitter_images(tweepy_api, twitter_handle, number_of_tweets):
+    print("Retreiving tweets from " + twitter_handle + "'s twitter feed.")
     '''Download the images from the twitter feed'''
     tweets=[]
     media_urls=set()
@@ -33,10 +35,11 @@ def download_twitter_images(tweepy_api, twitter_handle, number_of_tweets):
         if (media_tweet is not None):
             media_urls.add(media_tweet[0]['media_url'])
 
-    #download all of the images
+    #If there were any images, them
     if len(media_urls) is 0:
         return 0
     else:
+        print("Downloading images.")
         image_number=0
         image_filenames=[]
         for url in media_urls:
@@ -51,11 +54,13 @@ def download_twitter_images(tweepy_api, twitter_handle, number_of_tweets):
 	
 def convert_images_to_video():
     '''convert the sequence of images to video using ffmpeg'''
+    print("Converting the sequence of images to video.")
     subprocess.call('ffmpeg -loglevel panic -framerate 1/5 -f image2 -i image_%1d.jpg -vf scale=640:360 -r 30 twitter_image_video.mp4')
 	
 def analyze_video(filenames):
     '''analyze the images that are in the video using the google vision API to detect
     the different labels in the images'''
+    print("Analzying images.")
     client = vision.ImageAnnotatorClient()
     #loop through all images
     for file in filenames:
