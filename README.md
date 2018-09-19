@@ -1,8 +1,7 @@
 # EC601_Mini_Project_1
 
-This application uses the Twitter API and the Google API to look at a certain number of tweets from a Twitter feed and download the images contained in these tweets. The images that are downloaded are converted into a video and are analzyed using the label detection functionality of the Google vision API. In order to run this application, use the following command in your command prompt:
+This application uses the Twitter API and the Google API to look at a certain number of tweets from a Twitter feed and download the images contained in these tweets. The images that are downloaded are converted into a video and are analzyed using the label detection functionality of the Google vision API. Before running this application, look at the rest of the README.md document to make sure that you have entered all of the neccessary information and that your environment is set up correctly. In order to run this application, use the following command in your command prompt:
 > python run_mini_project_1.py
-However, before running this application, look at the rest of the README.md document to make sure that you have entered all of the neccessary information and that your environment is set up correctly.
 
 This repository contains two python modules:
     1. mini_project_1.py
