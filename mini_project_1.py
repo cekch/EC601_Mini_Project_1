@@ -25,7 +25,7 @@ def download_twitter_images(tweepy_api, twitter_handle, number_of_tweets):
     '''Need to add tweet_mode=extended in order to get the full text of the tweet,
 	otherwise, it will not always find the image.'''
     tweets=tweepy_api.user_timeline(screen_name=twitter_handle, count=number_of_tweets, tweet_mode='extended')
-	
+  
     #Determine if there are any tweets with media
     for tweet in tweets:
         media_tweet=tweet.entities.get('media')
@@ -34,21 +34,24 @@ def download_twitter_images(tweepy_api, twitter_handle, number_of_tweets):
             media_urls.add(media_tweet[0]['media_url'])
 
     #download all of the images
-    image_number=0
-    image_filenames=[]	
-    for url in media_urls:
-        filename_index=url.rfind('/')
-        filename=url[filename_index+1:]
-		#change filenames to a format that can be used as an input into ffmpeg
-        urllib.urlretrieve(url,'./image_'+str(image_number)+'.jpg')
-        image_filenames.append('image_'+str(image_number)+'.jpg')
-        image_number=image_number+1
+    if len(media_urls) is 0:
+        return 0
+    else:
+        image_number=0
+        image_filenames=[]
+        for url in media_urls:
+            filename_index=url.rfind('/')
+            filename=url[filename_index+1:]
+		    #change filenames to a format that can be used as an input into ffmpeg
+            urllib.urlretrieve(url,'./image_'+str(image_number)+'.jpg')
+            image_filenames.append('image_'+str(image_number)+'.jpg')
+            image_number=image_number+1
 
-    return image_filenames
+        return image_filenames
 	
 def convert_images_to_video():
     '''convert the sequence of images to video using ffmpeg'''
-    subprocess.call('ffmpeg -framerate 1/5 -f image2 -i image_%1d.jpg -vf scale=640:360 -r 30 twitter_image_video.mp4')
+    subprocess.call('ffmpeg -loglevel panic -framerate 1/5 -f image2 -i image_%1d.jpg -vf scale=640:360 -r 30 twitter_image_video.mp4')
 	
 def analyze_video(filenames):
     '''analyze the images that are in the video using the google vision API to detect
