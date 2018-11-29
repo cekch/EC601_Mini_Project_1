@@ -13,7 +13,6 @@ def main():
     api=mini_project_1.authorize_twitter(consumer_token, consumer_secret, access_key, access_secret)
     print("Enter twitter handle:")
     twitter_handle=input()
-    #twitter_handle='BostonTweet'
     number_of_tweets=20
     image_filenames=mini_project_1.download_twitter_images(api, twitter_handle, number_of_tweets)
     #Check to see if there were any images associated with the specified twitter feed
