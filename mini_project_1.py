@@ -87,6 +87,7 @@ def analyze_video(filenames):
     return all_image_labels
 
 def find_most_common_descriptors(all_image_labels):
+    '''find the five most common descriptors among all of the labels for the images.'''
     most_common_descriptors_dict={}
     top_5_descriptors=[]
     most_common_descriptors=set([label for label in all_image_labels if all_image_labels.count(label) > 1])
@@ -96,7 +97,8 @@ def find_most_common_descriptors(all_image_labels):
     most_common_descriptors_sorted = sorted(most_common_descriptors_dict.items(), key=lambda x:x[1])
     most_common_descriptors_sorted.reverse()
 	
-    for i in range(5):#range(len(most_common_descriptors_sorted)):
+    for i in range(5):
+    #if there aren't 5 common descriptors, then fill the rest of the list with "None"
         try:
             descriptor=most_common_descriptors_sorted[i][0]
             top_5_descriptors.append(descriptor)

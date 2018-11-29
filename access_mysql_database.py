@@ -1,8 +1,12 @@
 import mysql.connector
 import datetime
 
+'''
+This script has two functions for accessing the MySQL database. The add_row() function adds a row to the database. The query_database() function will search through the database for a specific descriptor and returns the twitter handles that had that descriptor as one of its top 5 most common descriptors.
+'''
+
 def add_row(most_common_descriptors, handle, num_of_tweets, num_of_tweets_with_images):
-    mydb = mysql.connector.connect(host="localhost", user="root", passwd="Enter your password.")
+    mydb = mysql.connector.connect(host="localhost", user="Enter your username.", passwd="Enter your password.")
     mycursor = mydb.cursor()
     mycursor.execute("USE app_session_database")
     current_date = datetime.datetime.today().strftime('%Y-%m-%d')
@@ -14,7 +18,7 @@ def add_row(most_common_descriptors, handle, num_of_tweets, num_of_tweets_with_i
 def query_database(search_descriptor):
     all_instances=[]
     twitter_handles_with_descriptor=[]
-    mydb = mysql.connector.connect(host="localhost", user="root", passwd="Enter your password.")
+    mydb = mysql.connector.connect(host="localhost", user="Enter your username.", passwd="Enter your password.")
     mycursor = mydb.cursor()
     mycursor.execute("USE app_session_database")
     mycursor.execute("SELECT twitter_handle FROM session_info WHERE (most_common_descriptor_1=%s) OR (most_common_descriptor_2=%s) OR (most_common_descriptor_3=%s) OR (most_common_descriptor_4=%s) OR (most_common_descriptor_5=%s)", (search_descriptor, search_descriptor, search_descriptor, search_descriptor, search_descriptor))
