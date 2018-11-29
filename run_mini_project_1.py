@@ -37,7 +37,7 @@ def main():
                 access_mysql_database.add_row(top_5_descriptors, twitter_handle, num_of_tweets_retrieved, num_of_tweets_with_images)
                 exit(0)
             elif database_selection == '2':
-                access_mongodb_database.add_row(top_5_descriptors, twitter_handle, num_of_tweets_retrieved, num_of_tweets_with_images)
+                access_mongodb_database.add_file(top_5_descriptors, twitter_handle, num_of_tweets_retrieved, num_of_tweets_with_images)
                 exit(0)
             elif database_selection == '3':
                 exit(0)
