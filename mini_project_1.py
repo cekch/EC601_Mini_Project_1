@@ -1,6 +1,6 @@
 #Author: Caroline Ekchian, cekchian@bu.edu
 import tweepy
-import urllib
+import urllib.request
 import subprocess
 from google.cloud import vision
 import io
@@ -46,7 +46,7 @@ def download_twitter_images(tweepy_api, twitter_handle, number_of_tweets):
             filename_index=url.rfind('/')
             filename=url[filename_index+1:]
 		    #change filenames to a format that can be used as an input into ffmpeg
-            urllib.urlretrieve(url,'./image_'+str(image_number)+'.jpg')
+            urllib.request.urlretrieve(url,'./image_'+str(image_number)+'.jpg')
             image_filenames.append('image_'+str(image_number)+'.jpg')
             image_number=image_number+1
 
@@ -63,6 +63,7 @@ def analyze_video(filenames):
     print("Analzying images.")
     client = vision.ImageAnnotatorClient()
     #loop through all images
+    all_image_labels = []
     for file in filenames:
         #load each image
         with io.open('./'+file, 'rb') as twitter_image_file:
@@ -77,4 +78,24 @@ def analyze_video(filenames):
 		#print the labels detected in each image
         print('Labels in ' + file+ ':')
         for label in image_labels:
+            all_image_labels.append(label.description)
+            #split_label_list = label.description.split()
+            #if len(split_label_list) != 1:
+            #    all_image_labels.append(word for split_label in split_label_list)
             print('\t'+label.description)
+	
+    #all_image_labels_str = [str(label) for label in all_image_labels]
+    #("ALL IMAGE LABELS = ")
+    #print(all_image_labels_str)
+    return all_image_labels
+
+def find_most_common_descriptors(all_image_labels):
+    most_common_descriptors_dict={}
+    most_common_descriptors=set([label for label in all_image_labels if all_image_labels.count(label) > 1]) #and (label not in most_common_descriptors))]
+    for descriptor in most_common_descriptors:
+        most_common_descriptors_dict[descriptor] = all_image_labels.count(descriptor)
+	
+    most_common_descriptors_sorted = sorted(most_common_descriptors_dict.items(), key=lambda x:x[1])
+    most_common_descriptors_sorted.reverse()
+
+    return most_common_descriptors_sorted

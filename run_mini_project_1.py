@@ -11,7 +11,9 @@ def main():
     access_key='Enter access key here.'
     access_secret='Enter secret access key here.'
     api=mini_project_1.authorize_twitter(consumer_token, consumer_secret, access_key, access_secret)
-    twitter_handle='BostonTweet'
+    print("Enter twitter handle:")
+    twitter_handle=input()
+    #twitter_handle='BostonTweet'
     number_of_tweets=20
     image_filenames=mini_project_1.download_twitter_images(api, twitter_handle, number_of_tweets)
     #Check to see if there were any images associated with the specified twitter feed
@@ -22,7 +24,8 @@ def main():
     else:
         #If there were, convert the images to video and analyze the images
         mini_project_1.convert_images_to_video()
-        mini_project_1.analyze_video(image_filenames)
+        all_descriptors=mini_project_1.analyze_video(image_filenames)
+        most_common_descriptors=mini_project_1.find_most_common_descriptors(all_descriptors);
         exit(0)
 	
 if __name__ == '__main__':
