@@ -1,4 +1,5 @@
 import mini_project_1
+import access_mysql_database
 
 '''This script uses the mini_project_1 api to first authorize a users use of the twitter api.
 Then it downloads the images from a twitter feed, where the twitter handle and number of tweets
@@ -14,7 +15,7 @@ def main():
     print("Enter twitter handle:")
     twitter_handle=input()
     number_of_tweets=20
-    image_filenames=mini_project_1.download_twitter_images(api, twitter_handle, number_of_tweets)
+    [image_filenames,num_of_tweets_retrieved, num_of_tweets_with_images]=mini_project_1.download_twitter_images(api, twitter_handle, number_of_tweets)
     #Check to see if there were any images associated with the specified twitter feed
     if image_filenames is 0:
         #If there weren't, exit
@@ -24,7 +25,8 @@ def main():
         #If there were, convert the images to video and analyze the images
         mini_project_1.convert_images_to_video()
         all_descriptors=mini_project_1.analyze_video(image_filenames)
-        most_common_descriptors=mini_project_1.find_most_common_descriptors(all_descriptors);
+        top_5_descriptors=mini_project_1.find_most_common_descriptors(all_descriptors)
+        access_mysql_database.add_row(top_5_descriptors, twitter_handle, num_of_tweets_retrieved, num_of_tweets_with_images)  
         exit(0)
 	
 if __name__ == '__main__':

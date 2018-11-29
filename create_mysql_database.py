@@ -1,6 +1,6 @@
 import mysql.connector
 
-mydb = mysql.connector.connect(host="localhost", user="root", passwd="Enter Password Here.")
+mydb = mysql.connector.connect(host="localhost", user="root", passwd="Enter your password.")
 mycursor = mydb.cursor()
 mycursor.execute("CREATE DATABASE app_session_database")
 mycursor.execute("USE app_session_database")
