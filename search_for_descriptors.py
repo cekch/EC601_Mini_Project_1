@@ -1,7 +1,17 @@
 import access_mysql_database
 import access_mongodb_database
 
-'''This script is an application where a user can enter a descriptor that they want to search for in a database. They can choose to search for the decriptor in the MySQL database or the MongoDB database. The application will print out all of the twitter handles that are associated with that descriptor (it is considered to be associated with a specific twitter handle if it was one of the top 5 descriptors in a session of running run_mini_project_1.py). The application uses the query_database functions in access_mongodb_database.py and access_mysql_database.py to determine if there were any twitter handles associated with that descriptor.'''
+'''This script is an application where a user can enter a descriptor 
+that they want to search for in a database. They can choose to 
+search for the decriptor in the MySQL database or the MongoDB 
+database. The application will print out all of the twitter 
+handles that are associated with that descriptor 
+(it is considered to be associated with a specific twitter handle
+if it was one of the top 5 descriptors in a session of running 
+run_mini_project_1.py). The application uses the query_database 
+functions in access_mongodb_database.py and access_mysql_database.py 
+to determine if there were any twitter handles associated with 
+that descriptor.'''
 
 def main():
     while(True):

@@ -2,9 +2,17 @@ import mini_project_1
 import access_mysql_database
 import access_mongodb_database
 
-'''This script uses the mini_project_1 api to first authorize a users use of the twitter api.
-Then it downloads the images from a twitter feed, where the twitter handle and number of tweets
-to look at is specified by the user in this script. The images that were downloaded then are converted to a video. Label detection is then used to analyze the images. Once the labels are analyzed, the user is given an option to save the information from their session of use for this application. They can either save it to the MongoDB database or the MySQL database. They can also choose to not save the session at all.'''
+'''This script uses the mini_project_1 api to first authorize 
+a users use of the twitter api. Then it downloads the images 
+from a twitter feed, where the twitter handle and number of tweets
+to look at is specified by the user in this script. The images 
+that were downloaded then are converted to a video. Label detection 
+is then used to analyze the images. Once the labels are analyzed, 
+the user is given an option to save the information from their 
+session of use for this application. They can either save it to 
+the MongoDB database or the MySQL database. They can also choose 
+to not save the session at all.'''
+
 def main():
     #Note to user: enter all tokens and access keys
     consumer_token='Enter consumer token here.'

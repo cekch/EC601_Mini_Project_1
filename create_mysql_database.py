@@ -1,10 +1,15 @@
 import mysql.connector
-'''This script creates a MySQL database with the name app_session_database. It creates a table within this database called session_info. This table holds the following information:
-session_id - this is a number starting from 1 that indicates the number session
+'''This script creates a MySQL database with the name 
+app_session_database. It creates a table within this 
+database called session_info. This table holds the 
+following information: session_id - this is a number 
+starting from 1 that indicates the number session
 session_date - the date of the session
-twitter_handle - the twitter handle that the user entered to download images from
-then a column for each of the top 5 descriptors of the images that were downloaded. If there
-were no common descriptors between the images downloaded, then these columns will be set to 0.'''
+twitter_handle - the twitter handle that the user 
+entered to download images from, then a column for each 
+of the top 5 descriptors of the images that were downloaded. 
+If there were no common descriptors between the images 
+downloaded, then these columns will be set to 0.'''
 
 mydb = mysql.connector.connect(host="localhost", user="Enter your username.", passwd="Enter your password.")
 mycursor = mydb.cursor()

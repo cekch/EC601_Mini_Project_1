@@ -1,7 +1,13 @@
 from pymongo import MongoClient
 import datetime
 
-'''This script has two functions for accessing the MongoDB database. The add_row() function adds a row to the database, if the the database does not exist, it will create it and if the collection does not exist, it will create that as well. The query_database() function will search through the database for a specific descriptor and returns the twitter handles that had that descriptor as one of its top 5 most common descriptors.'''
+'''This script has two functions for accessing the MongoDB database. 
+The add_row() function adds a row to the database, if the
+database does not exist, it will create it and if the collection 
+does not exist, it will create that as well. The query_database() 
+function will search through the database for a specific descriptor
+and returns the twitter handles that had that descriptor as one of
+its top 5 most common descriptors.'''
 
 def add_file(most_common_descriptors, handle, num_of_tweets, num_of_tweets_with_images):
     myclient=MongoClient('localhost', 27017)
