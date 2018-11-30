@@ -100,3 +100,4 @@ Notes
 > export GOOGLE_APPLICATION_CREDENTIALS=YourFilePath/Your_Credenitals.json
 3. This application was developed on Windows 10 using Python 3.7
 4. The video that is created in this application was compatible during testing with both Windows Media Player and VLC
+5. For reference, there is a file called ExamplesOfRunningScripts that contains screenshots of scripts being run and the resulting databases that are created when the scripts are run.
