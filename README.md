@@ -18,8 +18,8 @@ Running the Application
 ----
 First, make sure that you have read through the entire README to make sure that you have installed all of the neccessary resources. Then clone the repository and make sure you checkout the branch Mini_Project_3. Next, before running all any of the scripts, make sure that you have entered your password and username for all of the MySQL database connections. The occurrences of the mysql.connector.connect() functions occur in create_mysql_database.py and access_mysql_database.py(). Additionally, make sure that you have entered your consumer token, secret token, access key and secret access key into run_mini_project_1.py.
 
-Next, run create_mysql_database.py.
-.
+Next, run create_mysql_database.py
+
 > python create_mysql_database.py
 
 Then, run_mini_project_1.py
